@@ -8,6 +8,7 @@ load_dotenv()
 
 tavily = TavilyClient()
 
+
 @tool()
 def search_tool(query: str) -> str:
     """
