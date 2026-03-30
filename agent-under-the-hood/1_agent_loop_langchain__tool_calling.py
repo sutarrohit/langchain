@@ -36,6 +36,7 @@ def apply_discount(price: float, discount_tier: str) -> float:
 
 # ------ Agent Loop ------
 
+
 # @traceable(name="Langchain-Agent-Loop")
 def run_agent(query: str):
     tools = [get_product_price, apply_discount]
@@ -66,7 +67,7 @@ def run_agent(query: str):
         HumanMessage(content=query),
     ]
 
-#  for loop to iterate over all AI Messages
+    #  for loop to iterate over all AI Messages
     for iteration in range(1, MAX_ITERATION + 1):
         print(f"\n ------ Iteration {iteration} -------")
 

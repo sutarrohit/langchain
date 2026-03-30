@@ -11,6 +11,7 @@ MODEL = "qwen3:1.7b"
 
 # ------ tools  ------
 
+
 @traceable(run_type="tool")
 def get_product_price(product: str) -> float:
     """Look the product price in the catalog"""
