@@ -245,6 +245,7 @@ dependencies = [
     { name = "numpy" },
     { name = "pypdf" },
     { name = "sentence-transformers" },
+    { name = "torch" },
 ]
 
 [package.metadata]
@@ -262,6 +263,7 @@ requires-dist = [
     { name = "numpy", specifier = ">=2.4.4" },
     { name = "pypdf", specifier = ">=6.9.2" },
     { name = "sentence-transformers", specifier = ">=5.3.0" },
+    { name = "torch", specifier = ">=2.0.0" },
 ]
 
 [[package]]
