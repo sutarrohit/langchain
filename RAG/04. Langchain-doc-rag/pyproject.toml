@@ -1,0 +1,39 @@
+[project]
+name = "04-langchain-doc-rag"
+version = "0.1.0"
+description = "RAG application using LangChain for document processing"
+readme = "README.md"
+requires-python = ">=3.11"
+
+dependencies = [
+    "beautifulsoup4",
+    "black",
+    "tiktoken",
+    "openai",
+    "unstructured",
+    "nltk",
+    "fastapi",
+    "jinja2",
+    "uvicorn",
+    "streamlit",
+    "streamlit-chat",
+    "tqdm",
+    "isort",
+    "langchainhub",
+    "firecrawl-py",
+    "langchain-community",
+    "langsmith",
+    "pillow",
+    "certifi",
+    "langchain-chroma",
+    "python-dotenv",
+    "langchain-tavily",
+    "langchain-pinecone",
+    "langchain-huggingface>=1.2.1",
+    "sentence-transformers>=5.3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ipykernel"
+]
