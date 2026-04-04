@@ -21,23 +21,39 @@ def should_continue(state: MessagesState) -> str:
 flow = StateGraph(MessagesState)
 
 flow.add_node(AGENT_REASON, run_agent_reasoning)
-flow.set_entry_point(AGENT_REASON)
+flow.set_entry_point(AGENT_REASON)  # sets START -> agent_reason
+
 flow.add_node(ACT, tool_node)
 
 flow.add_conditional_edges(AGENT_REASON, should_continue, {END: END, ACT: ACT})
-flow.add_edge(START, AGENT_REASON)
-
+flow.add_edge(ACT, AGENT_REASON)
 
 app = flow.compile()
 
-app.get_graph().draw_mermaid_png(output_file_path="graph.png") 
+# app.get_graph().draw_mermaid_png(output_file_path="graph.png")
 
 
 def main():
     print("Hello from langgraph!")
+
+    res = app.invoke(
+        {
+            "messages": [
+                HumanMessage(content="What is weather in London? List it and triple it.")
+            ]
+        }
+    )
     
-    res = app.invoke({"messages": [HumanMessage(content="What is weather in tokyo? List it and triple it.")]})
-    print(res )
+    
+    print("=" * 70)
+    last = res["messages"][-1].content
+
+    if isinstance(last, list):
+        for block in last:
+            if block.get("type") == "text":
+                print(block["text"])
+    else:
+        print(last)
 
 
 if __name__ == "__main__":
