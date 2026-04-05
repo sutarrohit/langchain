@@ -15,7 +15,6 @@ def build_vector_store(
     chunk_size: int = 1000,
     chunk_overlap: int = 200,
 ):
-  
     
     documents = load_all_documents(data_dir)
     
