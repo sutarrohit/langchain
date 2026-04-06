@@ -1,11 +1,12 @@
 import os
-import numpy as np
-from typing import List, Any
 import uuid
+from typing import Any, List
+
+import chromadb
+import numpy as np
+from chromadb.config import Settings
 
 from ingestion_pipeline.embedding import EmbeddingPipeline
-import chromadb
-from chromadb.config import Settings
 
 
 class ChromaDBVectorStore:

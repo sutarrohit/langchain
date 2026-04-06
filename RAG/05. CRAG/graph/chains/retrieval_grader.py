@@ -1,6 +1,6 @@
 from langchain_core.prompts import ChatPromptTemplate
-from pydantic import BaseModel, Field
 from langchain_google_genai import ChatGoogleGenerativeAI
+from pydantic import BaseModel, Field
 
 llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0)
 

@@ -1,6 +1,7 @@
 import sys
-from ingestion_pipeline.vector_store import ChromaDBVectorStore
+
 from ingestion_pipeline.data_loader import load_all_documents
+from ingestion_pipeline.vector_store import ChromaDBVectorStore
 
 urls = [
     "https://lilianweng.github.io/posts/2023-06-23-agent/",

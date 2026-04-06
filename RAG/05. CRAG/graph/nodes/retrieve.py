@@ -1,10 +1,9 @@
 from typing import Any, Dict
+
 from langchain_core.documents import Document
 
-from ingestion_pipeline.vector_store import ChromaDBVectorStore
-
 from graph.state import GraphState
-
+from ingestion_pipeline.vector_store import ChromaDBVectorStore
 
 
 def retrieve(state: GraphState):
@@ -18,5 +17,8 @@ def retrieve(state: GraphState):
     )
 
     results = vector_store.query(question)
-    documents = [Document(page_content=r["text"], metadata=r.get("metadata", {})) for r in results]
+    documents = [
+        Document(page_content=r["text"], metadata=r.get("metadata", {}))
+        for r in results
+    ]
     return {"documents": documents, "question": question}
