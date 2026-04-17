@@ -62,7 +62,7 @@ if __name__ == "__main__":
         try:
             query = input("\nYou: ").strip()
         except (KeyboardInterrupt, EOFError):
-            print("\n\nGoodbye!")
+            print("\n\nGoodbye!")   
             break
 
         # ── Handle exit commands ───────────────────
