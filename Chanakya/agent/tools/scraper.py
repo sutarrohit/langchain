@@ -44,6 +44,8 @@ class Scraper:
                     "success": False,
                     "error": "No article content found — page may be paywalled or JS-only",
                 }
+                
+          
 
             return {
                 "success": True,

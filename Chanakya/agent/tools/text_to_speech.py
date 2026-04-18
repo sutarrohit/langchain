@@ -165,6 +165,8 @@ def text_to_speech_tool(text: str, output_path: str = "output.mp3") -> dict:
     Returns:
         Dict containing success status, audio file path, voice used, word count, and file size
     """
+    
+  
     tts = TextToSpeech()
 
     # First filter the text

@@ -24,44 +24,59 @@ agent_graph = create_agent(
 
 
 # Most detailed: Stream events
-async def run_agent_with_event_streaming(user_input: str):
+async def run_agent_with_event_streaming(user_input: str, stream: bool = False):
     """
     Stream individual events (most granular)
+    If stream=True, yields SSE data for FastAPI server.
     """
     inputs = {"messages": [{"role": "user", "content": user_input}]}
 
     print(f"Starting agent...\n")
 
-    # Buffer for LLM tokens to capture the last AI message
     current_llm_tokens = []
 
     async for event in agent_graph.astream_events(inputs, version="v2"):
         kind = event["event"]
 
-        # LLM streaming tokens
         if kind == "on_chat_model_stream":
             content = event["data"]["chunk"].content
             if content:
-                print(content, end="", flush=True)
+                if stream:
+                    yield f"data: {json.dumps({'type': 'token', 'content': content})}\n\n"
+                else:
+                    print(content, end="", flush=True)
                 current_llm_tokens.append(content)
 
-        # Tool execution start
         elif kind == "on_tool_start":
-            print(f"\n[Tool Start] Executing tool: {event['name']}")
-            # print(f"   Input: {event['data'].get('input')}")
+            tool_input = event["data"].get("input")
+            if stream:
+                yield f"data: {json.dumps({'type': 'tool_start', 'name': event['name'], 'input': tool_input})}\n\n"
+            else:
+                print(f"\n[Tool Start] Executing tool: {event['name']}")
+                print(f"   Input: {tool_input}")
 
-        # Tool execution end
         elif kind == "on_tool_end":
             print(f"[Tool End] Tool finished: {event['name']}")
             output = event["data"].get("output").content
-        
-            try:    
+
+            try:
                 if event["name"] == "text_to_speech_tool":
                     output_data = json.loads(output)
-                    if "success" in output_data:
-                        print(output_data)
+                    if stream:
+                        yield f"data: {json.dumps({'type': 'tool_end', 'name': event['name'], 'output': output_data})}\n\n"
+                    else:
+                        if "success" in output_data:
+                            print(output_data)
+                else:
+                    if stream:
+                        yield f"data: {json.dumps({'type': 'tool_end', 'name': event['name'], 'output': output})}\n\n"
+                    else:
+                        print(output)
             except:
-                print(output)
+                if stream:
+                    yield f"data: {json.dumps({'type': 'tool_end', 'name': event['name'], 'output': output})}\n\n"
+                else:
+                    print(output)
 
 
 
